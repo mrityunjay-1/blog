@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  frontend:
+    build: .
+    environment:
+      - CI=true
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - /app/node_modules
+      - .:/app
