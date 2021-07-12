@@ -8,3 +8,11 @@ before_install:
 
 script:
   - docker run -e CI=true mrityunjay1/blog npm run test
+
+
+after_success:
+  # login to docker
+  
+  echo "$PASS" | docker login -u mrityunjay1 --password-stdin
+
+  docker push mrityunjay1/blog
