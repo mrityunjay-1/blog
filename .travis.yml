@@ -4,18 +4,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t mrityunjay1/blog -f Dockerfile.dev .
+  - docker build -t mrityunjay1/blog_dev -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true mrityunjay1/blog npm run test
+  - docker run -e CI=true mrityunjay1/blog_dev npm run test
 
 
-# after_success:
-#   # login to docker
-  
-#   echo "$PASS" | docker login -u mrityunjay1 --password-stdin
+after_success:
+  # login to docker
 
-#   docker push mrityunjay1/blog
+  docker build -t mrityunjay1/blog . 
+
+  echo "$PASS" | docker login -u mrityunjay1 --password-stdin
+
+  docker push mrityunjay1/blog
 
 deploy:
   provider: elasticbeanstalk
