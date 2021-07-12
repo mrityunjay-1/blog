@@ -10,9 +10,20 @@ script:
   - docker run -e CI=true mrityunjay1/blog npm run test
 
 
-after_success:
-  # login to docker
+# after_success:
+#   # login to docker
   
-  echo "$PASS" | docker login -u mrityunjay1 --password-stdin
+#   echo "$PASS" | docker login -u mrityunjay1 --password-stdin
 
-  docker push mrityunjay1/blog
+#   docker push mrityunjay1/blog
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "blog"
+  env: "Blog-env"
+  bucket_name: "elasticbeanstalk-us-east-1-202116681626"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY_ID
+  secret_access_key: $AWS_SECRET_ACCESS_KEY
